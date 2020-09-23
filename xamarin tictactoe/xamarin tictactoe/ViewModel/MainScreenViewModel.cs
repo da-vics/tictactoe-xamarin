@@ -66,7 +66,6 @@ namespace tictactoe.ViewModel
 
                 else
                     OnUserAlert?.Invoke("Invalid", "Box Filled!");
-
             }///
 
 

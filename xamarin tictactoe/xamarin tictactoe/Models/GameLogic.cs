@@ -66,19 +66,17 @@ namespace tictactoe.Models
             {
                 for (short i = temp2; i < temp; ++i)
                 {
+                    if (tileValues[i] == GameEnumStates.BoxState.zero)
+                        break;
 
                     if (tileValues[i] == GameEnumStates.BoxState.cross)
-                    {
                         ++count;
-                    }
 
                     else
-                    {
                         Aival = i;
-                    }
                 }
 
-                if (count == 2 && tileValues[(int)Aival] != GameEnumStates.BoxState.zero)
+                if (count == 2 && Aival != null)
                     break;
 
                 count = 0;
@@ -99,16 +97,14 @@ namespace tictactoe.Models
             {
                 for (short i = temp2; i <= temp; i += 3)
                 {
+                    if (tileValues[i] == GameEnumStates.BoxState.zero)
+                        break;
 
                     if (tileValues[i] == GameEnumStates.BoxState.cross)
-                    {
                         ++count;
-                    }
 
                     else
-                    {
                         Aival = i;
-                    }
                 }
 
 
@@ -134,15 +130,14 @@ namespace tictactoe.Models
             {
                 for (short i = temp2; i <= temp; i += incr)
                 {
+                    if (tileValues[i] == GameEnumStates.BoxState.zero)
+                        break;
+
                     if (tileValues[i] == GameEnumStates.BoxState.cross)
-                    {
                         ++count;
-                    }
 
                     else
-                    {
                         Aival = i;
-                    }
                 }
 
                 if (count == 2)
@@ -163,7 +158,6 @@ namespace tictactoe.Models
         #region ComputerTurn
         public int computerPlay()
         {
-
             int index = 0;
 
             short? val = processAI();
@@ -174,11 +168,10 @@ namespace tictactoe.Models
                 return index;
             }
 
-
             while (true)
             {
                 Random random = new Random();
-                index = random.Next(0, 8);
+                index = random.Next(0, maxSize - 1);
 
                 if (tileValues[index] == GameEnumStates.BoxState.free)
                     break;
@@ -316,16 +309,11 @@ namespace tictactoe.Models
                         break;
                     }
                     else
-                    {
                         this.GameState = false;
-                    }
                 }
 
                 if (this.GameState != true)
-                {
                     winner = GameEnumStates.IdentifyWinner.stalemate;
-                }
-
             }
         }
 
