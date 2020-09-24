@@ -7,9 +7,8 @@ namespace tictactoe.ViewModel
 {
     public class GamePlayScreenViewModel : BaseViewModel
     {
-
         private Grid _container { get; set; }
-        private GameLogic _gameLogic = new GameLogic();
+        private readonly GameLogic _gameLogic = new GameLogic();
 
         public delegate void AlertUser(string title, string message);
         public event AlertUser OnUserAlert;
@@ -91,7 +90,7 @@ namespace tictactoe.ViewModel
                     });
 
                     OnUserAlert?.Invoke("GameOver", "Stalemate");
-                    Reset();
+                    //Reset();
                 }
                 else
                     winLogic();
@@ -108,13 +107,11 @@ namespace tictactoe.ViewModel
             {
                 var btn = _container.Children.Cast<Button>().ToArray();
 
-                for (int i = 0; i < _gameLogic.maxRowSize; ++i)
-                {
+                for (int i = 0; i < GameLogic.maxRowSize; ++i)
                     btn[_gameLogic.winSegments[i]].BackgroundColor = Color.Green;
-                }
 
                 OnUserAlert?.Invoke("GameOver", $"{_gameLogic.winner.ToString()} wins");
-                Reset();
+                //Reset();
             }
         }
     }

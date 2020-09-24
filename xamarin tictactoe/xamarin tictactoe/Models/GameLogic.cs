@@ -6,70 +6,59 @@ namespace tictactoe.Models
     {
 
         #region privateMembers
-        private int maxSize { get; set; } = 9;
-
-        private bool foundPattern { get; set; }
+        private const int maxSize = 9;
+        private bool foundPattern { get; set; } = false;
         #endregion
 
-
-        #region publicVariables
-        public short maxRowSize { get; private set; } = 3;
-
-        public short maxcolSize { get; private set; } = 3;
-
-        public bool PlayerState { get; set; }
-
-        public bool GameState { get; private set; }
-
+        #region publicMembers
+        public const short maxRowSize = 3;
+        public const short maxcolSize = 3;
         public short[] winSegments;
 
-        public GameEnumStates.BoxState[] tileValues;
+        public bool PlayerState { get; set; } = true;
+        public bool GameState { get; private set; } = true;
 
+        public GameEnumStates.BoxState[] tileValues;
         public GameEnumStates.IdentifyWinner winner;
         #endregion
 
 
         public GameLogic()
         {
-            this.winSegments = new short[3] { 0, 0, 0 };
-            this.tileValues = new GameEnumStates.BoxState[9];
-            this.winner = new GameEnumStates.IdentifyWinner();
-            this.foundPattern = false;
-            this.PlayerState = true;
-            this.GameState = true;
+            winSegments = new short[3] { 0, 0, 0 };
+            tileValues = new GameEnumStates.BoxState[maxSize];
+            winner = new GameEnumStates.IdentifyWinner();
         }
 
         public void defaultTileInit()
         {
             for (int i = 0; i < maxSize; ++i)
-            {
                 tileValues[i] = GameEnumStates.BoxState.free;
-            }
 
             winner = GameEnumStates.IdentifyWinner.NULL;
-            this.foundPattern = false;
-            this.PlayerState = true;
-            this.GameState = true;
+            foundPattern = false;
+            PlayerState = true;
+            GameState = true;
         }
 
-
-        private short? processAI()
+        #region ComputerControl
+        private short? LogicalAIComputation(GameEnumStates.BoxState Piece1, GameEnumStates.BoxState Piece2)
         {
             short count = 0;
             short? Aival = null;
 
             #region Horizontalcheck
-            short temp = this.maxRowSize;
+            short temp = maxRowSize;
             short temp2 = 0;
 
-            for (short j = 0; j < this.maxRowSize; ++j)
+            for (short j = 0; j < maxRowSize; ++j)
             {
                 for (short i = temp2; i < temp; ++i)
                 {
-                    if (tileValues[i] == GameEnumStates.BoxState.zero)
+                    if (tileValues[i] == Piece1)
                         break;
 
-                    if (tileValues[i] == GameEnumStates.BoxState.cross)
+                    if (tileValues[i] == Piece2)
                         ++count;
 
                     else
@@ -80,8 +69,8 @@ namespace tictactoe.Models
                     break;
 
                 count = 0;
-                temp += this.maxRowSize;
-                temp2 += 2 + 1;
+                temp += maxRowSize;
+                temp2 += maxRowSize;
             }
 
             if (count == 2 && Aival != null) return (short)Aival;
@@ -89,18 +78,18 @@ namespace tictactoe.Models
 
             #region VerticalCheck
             count = 0;
-            temp = 6;
+            temp = (maxcolSize * 2);
             temp2 = 0;
             short temp3 = temp2;
 
-            for (short j = 0; j < this.maxcolSize; ++j)
+            for (short j = 0; j < maxcolSize; ++j)
             {
                 for (short i = temp2; i <= temp; i += 3)
                 {
-                    if (tileValues[i] == GameEnumStates.BoxState.zero)
+                    if (tileValues[i] == Piece1)
                         break;
 
-                    if (tileValues[i] == GameEnumStates.BoxState.cross)
+                    if (tileValues[i] == Piece2)
                         ++count;
 
                     else
@@ -122,18 +111,18 @@ namespace tictactoe.Models
 
             #region diagonalCheck
             count = 0;
-            temp = 8;
+            temp = (maxSize - 1);
             temp2 = 0;
-            short incr = 4;
+            short incr = (maxcolSize + 1);
 
-            for (short j = 0; j < this.maxcolSize - 1; ++j)
+            for (short j = 0; j < maxcolSize - 1; ++j)
             {
                 for (short i = temp2; i <= temp; i += incr)
                 {
-                    if (tileValues[i] == GameEnumStates.BoxState.zero)
+                    if (tileValues[i] == Piece1)
                         break;
 
-                    if (tileValues[i] == GameEnumStates.BoxState.cross)
+                    if (tileValues[i] == Piece2)
                         ++count;
 
                     else
@@ -144,9 +133,9 @@ namespace tictactoe.Models
                     break;
 
                 count = 0;
-                temp -= 2;
-                temp2 += 2;
-                incr -= 2;
+                temp -= (maxcolSize - 1);
+                temp2 += (maxcolSize - 1);
+                incr -= (maxcolSize - 1);
             }
 
             if (count == 2 && Aival != null) return (short)Aival;
@@ -155,12 +144,17 @@ namespace tictactoe.Models
             return null;
         }
 
+        #endregion
+
         #region ComputerTurn
         public int computerPlay()
         {
-            int index = 0;
+            int index;
 
-            short? val = processAI();
+            var val = LogicalAIComputation(GameEnumStates.BoxState.cross, GameEnumStates.BoxState.zero);
+
+            if (val == null)
+                val = LogicalAIComputation(GameEnumStates.BoxState.zero, GameEnumStates.BoxState.cross);
 
             if (val != null)
             {
@@ -187,9 +181,9 @@ namespace tictactoe.Models
             #region Horizontalcheck
 
             short segindex = 0;
-            short temp = this.maxRowSize;
+            short temp = maxRowSize;
             short temp2 = 0;
-            for (short j = 0; j < this.maxRowSize; ++j)
+            for (short j = 0; j < maxRowSize; ++j)
             {
                 for (short i = temp2; i < temp; ++i)
                 {
@@ -212,22 +206,21 @@ namespace tictactoe.Models
                     break;
 
                 segindex = 0;
-                temp += this.maxRowSize;
-                temp2 += 2 + 1;
+                temp += maxRowSize;
+                temp2 += maxRowSize;
             }
 
             #endregion
 
             if (foundPattern) return; ///
 
-
             #region VerticalCheck
             segindex = 0;
-            temp = 6;
+            temp = (maxcolSize * 2);
             temp2 = 0;
             short temp3 = temp2;
 
-            for (short j = 0; j < this.maxcolSize; ++j)
+            for (short j = 0; j < maxcolSize; ++j)
             {
                 for (short i = temp2; i <= temp; i += 3)
                 {
@@ -259,15 +252,14 @@ namespace tictactoe.Models
 
             if (foundPattern) return; ///
 
-
             #region diagonalCheck
 
             segindex = 0;
-            temp = 8;
+            temp = (maxSize - 1);
             temp2 = 0;
-            short incr = 4;
+            short incr = (maxcolSize + 1);
 
-            for (short j = 0; j < this.maxcolSize - 1; ++j)
+            for (short j = 0; j < maxcolSize - 1; ++j)
             {
                 for (short i = temp2; i <= temp; i += incr)
                 {
@@ -290,9 +282,9 @@ namespace tictactoe.Models
                     break;
 
                 segindex = 0;
-                temp -= 2;
-                temp2 += 2;
-                incr -= 2;
+                temp -= (maxcolSize - 1);
+                temp2 += (maxcolSize - 1);
+                incr -= (maxcolSize - 1);
             }
             #endregion
         }
