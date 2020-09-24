@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Threading;
 using tictactoe.ViewModel;
 using Xamarin.Forms;
 
@@ -9,21 +10,10 @@ namespace xamarin_tictactoe
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        private MainScreenViewModel _screenViewModel { get; set; }
-
         public MainPage()
         {
             InitializeComponent();
-            _screenViewModel = new MainScreenViewModel(Container);
-            this.BindingContext = _screenViewModel;
-            _screenViewModel.MapInit();
-            _screenViewModel.OnUserAlert += AlertUser;
+            BindingContext = new MainPageViewModel();
         }
-
-        private void AlertUser(string title, string message)
-        {
-            DisplayAlert(title, message, "OK");
-        }
-
     }
 }

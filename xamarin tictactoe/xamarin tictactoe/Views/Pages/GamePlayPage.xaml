@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="tictactoe.Views.Pages.GamePlayPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationPage.HasNavigationBar="False"
+    mc:Ignorable="d">
+
+    <ContentPage.Resources>
+
+        <Style TargetType="Button">
+
+            <Setter Property="FontSize" Value="100" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="DarkRed" />
+            <Setter Property="BackgroundColor" Value="LightGray" />
+
+        </Style>
+
+    </ContentPage.Resources>
+
+    <Grid
+        x:Name="Container"
+        Margin="0"
+        Padding="0">
+
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+
+        </Grid.ColumnDefinitions>
+
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+
+
+        <Button Grid.Row="0" Grid.Column="0" />
+        <Button Grid.Row="0" Grid.Column="1" />
+        <Button Grid.Row="0" Grid.Column="2" />
+
+        <Button Grid.Row="1" Grid.Column="0" />
+        <Button Grid.Row="1" Grid.Column="1" />
+        <Button Grid.Row="1" Grid.Column="2" />
+
+        <Button Grid.Row="2" Grid.Column="0" />
+        <Button Grid.Row="2" Grid.Column="1" />
+        <Button Grid.Row="2" Grid.Column="2" />
+
+
+    </Grid>
+</ContentPage>

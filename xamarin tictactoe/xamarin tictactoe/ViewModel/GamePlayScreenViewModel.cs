@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace tictactoe.ViewModel
 {
-    public class MainScreenViewModel : BaseViewModel
+    public class GamePlayScreenViewModel : BaseViewModel
     {
 
         private Grid _container { get; set; }
@@ -14,7 +14,7 @@ namespace tictactoe.ViewModel
         public delegate void AlertUser(string title, string message);
         public event AlertUser OnUserAlert;
 
-        public MainScreenViewModel(Grid grid)
+        public GamePlayScreenViewModel(Grid grid)
         {
             _container = grid;
         }
@@ -98,7 +98,6 @@ namespace tictactoe.ViewModel
             }
         }
         #endregion
-
 
         void winLogic()
         {

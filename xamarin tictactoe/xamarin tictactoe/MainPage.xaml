@@ -6,57 +6,45 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     BackgroundColor="WhiteSmoke"
+    NavigationPage.HasNavigationBar="False"
     mc:Ignorable="d">
 
 
-    <ContentPage.Resources>
-
-        <Style TargetType="Button">
-
-            <Setter Property="FontSize" Value="100" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="TextColor" Value="DarkRed" />
-            <Setter Property="BackgroundColor" Value="LightGray" />
-
-        </Style>
-
-    </ContentPage.Resources>
-
-    <Grid
-        x:Name="Container"
-        Margin="0"
-        Padding="0">
-
-        <Grid.ColumnDefinitions>
-
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-
-        </Grid.ColumnDefinitions>
-
+    <Grid>
 
         <Grid.RowDefinitions>
 
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
 
         </Grid.RowDefinitions>
 
+        <Label
+            Grid.Row="0"
+            Margin="10"
+            FontAttributes="Bold"
+            FontSize="40"
+            HorizontalOptions="Center"
+            Text="Davics"
+            TextColor="DarkRed"
+            VerticalTextAlignment="Center" />
 
-        <Button Grid.Row="0" Grid.Column="0" />
-        <Button Grid.Row="0" Grid.Column="1" />
-        <Button Grid.Row="0" Grid.Column="2" />
+        <StackLayout
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
 
-        <Button Grid.Row="1" Grid.Column="0" />
-        <Button Grid.Row="1" Grid.Column="1" />
-        <Button Grid.Row="1" Grid.Column="2" />
+            <Button
+                Margin="10"
+                Padding="20"
+                BackgroundColor="SkyBlue"
+                Command="{Binding ToGamePageCommand}"
+                CornerRadius="10"
+                FontSize="30"
+                Text="Start"
+                TextColor="White" />
 
-        <Button Grid.Row="2" Grid.Column="0" />
-        <Button Grid.Row="2" Grid.Column="1" />
-        <Button Grid.Row="2" Grid.Column="2" />
-
+        </StackLayout>
 
     </Grid>
 
