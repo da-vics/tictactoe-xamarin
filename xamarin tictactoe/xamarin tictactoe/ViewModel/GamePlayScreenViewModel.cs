@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows.Input;
 using tictactoe.Models;
 using Xamarin.Forms;
 
@@ -13,14 +14,17 @@ namespace tictactoe.ViewModel
         public delegate void AlertUser(string title, string message);
         public event AlertUser OnUserAlert;
 
+        public ICommand ResetGame { get; set; }
+
         public GamePlayScreenViewModel(Grid grid)
         {
             _container = grid;
+            ResetGame = new Command(Reset);
         }
 
         public void MapInit()
         {
-            _gameLogic.defaultTileInit();
+            _gameLogic.DefaultTileInit();
 
             _container.Children.Cast<Button>().ToList().ForEach(btn =>
             {
@@ -33,7 +37,7 @@ namespace tictactoe.ViewModel
 
         public void Reset()
         {
-            _gameLogic.defaultTileInit();
+            _gameLogic.DefaultTileInit();
 
             _container.Children.Cast<Button>().ToList().ForEach(btn =>
             {
@@ -60,7 +64,7 @@ namespace tictactoe.ViewModel
                     _gameLogic.tileValues[gridIndex] = GameEnumStates.BoxState.cross;
                     btnPressed.Text = "X";
                     _gameLogic.PlayerState = false;
-                    _gameLogic.getWinner(GameEnumStates.BoxState.cross);
+                    _gameLogic.GetWinner(GameEnumStates.BoxState.cross);
                 }
 
                 else
@@ -71,12 +75,12 @@ namespace tictactoe.ViewModel
             if (!_gameLogic.PlayerState && _gameLogic.GameState)
             {
                 var btn = _container.Children.Cast<Button>().ToArray();
-                var index = _gameLogic.computerPlay();
+                var index = _gameLogic.ComputerPlay();
                 btn[index].Text = "O";
                 btn[index].TextColor = Color.Red;
                 _gameLogic.tileValues[index] = GameEnumStates.BoxState.zero;
                 _gameLogic.PlayerState = true;
-                _gameLogic.getWinner(GameEnumStates.BoxState.zero);
+                _gameLogic.GetWinner(GameEnumStates.BoxState.zero);
             }
 
             if (_gameLogic.GameState != true)
@@ -93,12 +97,12 @@ namespace tictactoe.ViewModel
                     //Reset();
                 }
                 else
-                    winLogic();
+                    WinLogic();
             }
         }
         #endregion
 
-        void winLogic()
+        void WinLogic()
         {
             bool winnerLogic = _gameLogic.winner == GameEnumStates.IdentifyWinner.player
                    || _gameLogic.winner == GameEnumStates.IdentifyWinner.computer;

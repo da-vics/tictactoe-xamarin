@@ -4,10 +4,9 @@ namespace tictactoe.Models
 {
     public class GameLogic
     {
-
         #region privateMembers
         private const int maxSize = 9;
-        private bool foundPattern { get; set; } = false;
+        private bool FoundPattern { get; set; } = false;
         #endregion
 
         #region publicMembers
@@ -22,7 +21,6 @@ namespace tictactoe.Models
         public GameEnumStates.IdentifyWinner winner;
         #endregion
 
-
         public GameLogic()
         {
             winSegments = new short[3] { 0, 0, 0 };
@@ -30,13 +28,13 @@ namespace tictactoe.Models
             winner = new GameEnumStates.IdentifyWinner();
         }
 
-        public void defaultTileInit()
+        public void DefaultTileInit()
         {
             for (int i = 0; i < maxSize; ++i)
                 tileValues[i] = GameEnumStates.BoxState.free;
 
             winner = GameEnumStates.IdentifyWinner.NULL;
-            foundPattern = false;
+            FoundPattern = false;
             PlayerState = true;
             GameState = true;
         }
@@ -147,7 +145,7 @@ namespace tictactoe.Models
         #endregion
 
         #region ComputerTurn
-        public int computerPlay()
+        public int ComputerPlay()
         {
             int index;
 
@@ -175,7 +173,7 @@ namespace tictactoe.Models
         }
         #endregion
 
-        private void getwin(GameEnumStates.BoxState boxState)
+        private void Getwin(GameEnumStates.BoxState boxState)
         {
 
             #region Horizontalcheck
@@ -190,7 +188,7 @@ namespace tictactoe.Models
                     if (tileValues[i] != boxState)
                     {
                         this.GameState = true;
-                        foundPattern = false;
+                        FoundPattern = false;
                         break;
                     }
 
@@ -198,11 +196,11 @@ namespace tictactoe.Models
                     {
                         this.winSegments[segindex++] = i;
                         this.GameState = false;
-                        foundPattern = true;
+                        FoundPattern = true;
                     }
                 }
 
-                if (foundPattern)
+                if (FoundPattern)
                     break;
 
                 segindex = 0;
@@ -212,7 +210,7 @@ namespace tictactoe.Models
 
             #endregion
 
-            if (foundPattern) return; ///
+            if (FoundPattern) return; ///
 
             #region VerticalCheck
             segindex = 0;
@@ -227,7 +225,7 @@ namespace tictactoe.Models
                     if (tileValues[i] != boxState)
                     {
                         this.GameState = true;
-                        foundPattern = false;
+                        FoundPattern = false;
                         break;
                     }
 
@@ -235,11 +233,11 @@ namespace tictactoe.Models
                     {
                         this.winSegments[segindex++] = i;
                         this.GameState = false;
-                        foundPattern = true;
+                        FoundPattern = true;
                     }
                 }
 
-                if (foundPattern)
+                if (FoundPattern)
                     break;
 
                 segindex = 0;
@@ -250,7 +248,7 @@ namespace tictactoe.Models
 
             #endregion
 
-            if (foundPattern) return; ///
+            if (FoundPattern) return; ///
 
             #region diagonalCheck
 
@@ -266,7 +264,7 @@ namespace tictactoe.Models
                     if (tileValues[i] != boxState)
                     {
                         this.GameState = true;
-                        foundPattern = false;
+                        FoundPattern = false;
                         break;
                     }
 
@@ -274,11 +272,11 @@ namespace tictactoe.Models
                     {
                         this.winSegments[segindex++] = i;
                         this.GameState = false;
-                        foundPattern = true;
+                        FoundPattern = true;
                     }
                 }
 
-                if (foundPattern)
+                if (FoundPattern)
                     break;
 
                 segindex = 0;
@@ -289,7 +287,7 @@ namespace tictactoe.Models
             #endregion
         }
 
-        public void checkGameState()
+        public void CheckGameState()
         {
             if (this.winner == GameEnumStates.IdentifyWinner.NULL)
             {
@@ -309,13 +307,13 @@ namespace tictactoe.Models
             }
         }
 
-        public void getWinner(GameEnumStates.BoxState tempstate)
+        public void GetWinner(GameEnumStates.BoxState tempstate)
         {
             if (this.GameState != false)
             {
-                getwin(tempstate);
+                Getwin(tempstate);
 
-                if (foundPattern)
+                if (FoundPattern)
                 {
                     if (tempstate == GameEnumStates.BoxState.cross)
                         winner = GameEnumStates.IdentifyWinner.player;
@@ -324,11 +322,9 @@ namespace tictactoe.Models
                         winner = GameEnumStates.IdentifyWinner.computer;
                 }
 
-                this.checkGameState();
+                CheckGameState();
             }
 
         } ///
-
     }
-
 }

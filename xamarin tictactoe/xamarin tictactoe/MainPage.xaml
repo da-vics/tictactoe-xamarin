@@ -8,6 +8,7 @@
     Background="#18222f"
     BackgroundColor="WhiteSmoke"
     NavigationPage.HasNavigationBar="False"
+    Opacity="0.9"
     mc:Ignorable="d">
 
     <Grid>
@@ -42,6 +43,16 @@
                 CornerRadius="10"
                 FontSize="30"
                 Text="Start"
+                TextColor="White" />
+
+            <Button
+                Margin="10"
+                Padding="20"
+                BackgroundColor="SkyBlue"
+                Command="{Binding DisplayInfo}"
+                CornerRadius="10"
+                FontSize="30"
+                Text="About"
                 TextColor="White" />
 
         </StackLayout>

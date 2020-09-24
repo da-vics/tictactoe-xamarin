@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Threading;
 using tictactoe.ViewModel;
 using Xamarin.Forms;
 
