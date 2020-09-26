@@ -15,5 +15,5 @@
 
 <h3>Stalemate no Winner</h3>
 <div align="middle">
-<img src="xamarin tictactoe/xamarin tictactoe/project_images/Stalemate.png" width=50%> </img>
+<img src="xamarin tictactoe/xamarin tictactoe/ProjectDemoImages/Stalemate.png" width=50%> </img>
 </div>
