@@ -13,6 +13,7 @@ namespace xamarin_tictactoe
             MainPage = new NavigationPage(new MainPage());
         }
 
+
         protected override void OnStart()
         {
         }

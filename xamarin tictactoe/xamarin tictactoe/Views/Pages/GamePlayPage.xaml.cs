@@ -15,12 +15,12 @@ namespace tictactoe.Views.Pages
             _screenViewModel = new GamePlayScreenViewModel(Container);
             this.BindingContext = _screenViewModel;
             _screenViewModel.MapInit();
-            _screenViewModel.OnUserAlert += AlertUser;
+
+            _screenViewModel.OnUserAlert += (title, message) =>
+            {
+                DisplayAlert(title, message, "OK");
+            };
         }
 
-        private void AlertUser(string title, string message)
-        {
-            DisplayAlert(title, message, "OK");
-        }
     }
 }
