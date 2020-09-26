@@ -72,6 +72,17 @@
 
             </Grid.RowDefinitions>
 
+            <Grid.Resources>
+
+                <Style TargetType="Button">
+
+                    <Setter Property="FontFamily" Value="HandFont" />
+                    <Setter Property="FontSize" Value="100" />
+
+                </Style>
+
+            </Grid.Resources>
+
             <Button Grid.Row="0" Grid.Column="0" />
             <Button Grid.Row="0" Grid.Column="1" />
             <Button Grid.Row="0" Grid.Column="2" />

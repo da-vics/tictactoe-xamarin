@@ -6,7 +6,6 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="#18222f"
-    BackgroundColor="WhiteSmoke"
     NavigationPage.HasNavigationBar="False"
     Opacity="0.9"
     mc:Ignorable="d">
@@ -22,9 +21,11 @@
 
         <Label
             Grid.Row="0"
-            Margin="10"
+            Margin="0,30,0,0"
+            Padding="10"
             FontAttributes="Bold"
-            FontSize="40"
+            FontFamily="HandFont"
+            FontSize="50"
             HorizontalOptions="Center"
             Text="Davics"
             TextColor="White"
@@ -39,9 +40,11 @@
                 Margin="10"
                 Padding="20"
                 BackgroundColor="SkyBlue"
+                BorderWidth="0"
                 Command="{Binding ToGamePageCommand}"
                 CornerRadius="10"
-                FontSize="30"
+                FontFamily="HandFont"
+                FontSize="35"
                 Text="Start"
                 TextColor="White" />
 
@@ -49,9 +52,11 @@
                 Margin="10"
                 Padding="20"
                 BackgroundColor="SkyBlue"
+                BorderWidth="0"
                 Command="{Binding DisplayInfo}"
                 CornerRadius="10"
-                FontSize="30"
+                FontFamily="HandFont"
+                FontSize="35"
                 Text="About"
                 TextColor="White" />
 

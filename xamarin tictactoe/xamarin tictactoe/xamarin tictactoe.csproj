@@ -12,10 +12,12 @@
 
   <ItemGroup>
     <None Remove="fa-solid-900.ttf" />
+    <None Remove="Fonts\TrashHand.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Fonts\fa-solid-900.ttf" />
+    <EmbeddedResource Include="Fonts\TrashHand.ttf" />
   </ItemGroup>
 
   <ItemGroup>
