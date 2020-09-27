@@ -28,7 +28,7 @@
             FontSize="50"
             HorizontalOptions="Center"
             Text="Davics"
-            TextColor="White"
+            TextColor="Wheat"
             VerticalTextAlignment="Center" />
 
         <StackLayout
@@ -41,11 +41,23 @@
                 Padding="20"
                 BackgroundColor="SkyBlue"
                 BorderWidth="0"
-                Command="{Binding ToGamePageCommand}"
+                Command="{Binding AgaisntComputer}"
                 CornerRadius="10"
                 FontFamily="HandFont"
                 FontSize="35"
-                Text="Start"
+                Text="Against Computer"
+                TextColor="White" />
+
+            <Button
+                Margin="10"
+                Padding="20"
+                BackgroundColor="SkyBlue"
+                BorderWidth="0"
+                Command="{Binding AgaisntHuman}"
+                CornerRadius="10"
+                FontFamily="HandFont"
+                FontSize="35"
+                Text="Two Player"
                 TextColor="White" />
 
             <Button

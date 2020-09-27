@@ -21,7 +21,7 @@
 
     </ContentPage.Resources>
 
-    <Grid>
+    <Grid Padding="10" BackgroundColor="WhiteSmoke">
 
         <Grid.RowDefinitions>
 
@@ -33,19 +33,32 @@
         <StackLayout
             Grid.Row="0"
             Margin="5"
-            Padding="5"
+            Padding="0"
             HorizontalOptions="End"
             Orientation="Horizontal"
+            Spacing="0"
             VerticalOptions="Center">
 
+            <Label
+                Margin="0"
+                Padding="0"
+                FontFamily="HandFont"
+                FontSize="20"
+                Text="Reload"
+                TextColor="DarkRed"
+                VerticalOptions="Center" />
+
             <Button
+                Margin="0"
+                Padding="0"
                 BackgroundColor="Transparent"
                 BorderColor="Transparent"
                 BorderWidth="0"
                 Command="{Binding ResetGame}"
                 FontFamily="FontAwesome"
                 FontSize="20"
-                Text="&#xf0e2;" />
+                Text="&#xf0e2;"
+                VerticalOptions="Center" />
 
         </StackLayout>
 
@@ -78,6 +91,7 @@
 
                     <Setter Property="FontFamily" Value="HandFont" />
                     <Setter Property="FontSize" Value="100" />
+                    <Setter Property="BackgroundColor" Value="LightGray" />
 
                 </Style>
 

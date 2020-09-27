@@ -14,33 +14,33 @@ namespace tictactoe.Models
         public const short maxcolSize = 3;
         public short[] winSegments;
 
-        public bool PlayerState { get; set; } = true;
+        public bool FirstPlayerState { get; set; } = true;
         public bool GameState { get; private set; } = true;
 
-        public GameEnumStates.BoxState[] tileValues;
-        public GameEnumStates.IdentifyWinner winner;
+        public BoxState[] tileValues;
+        public IdentifyWinner winner;
         #endregion
 
         public GameLogic()
         {
             winSegments = new short[3] { 0, 0, 0 };
-            tileValues = new GameEnumStates.BoxState[maxSize];
-            winner = new GameEnumStates.IdentifyWinner();
+            tileValues = new BoxState[maxSize];
+            winner = new IdentifyWinner();
         }
 
         public void DefaultTileInit()
         {
             for (int i = 0; i < maxSize; ++i)
-                tileValues[i] = GameEnumStates.BoxState.free;
+                tileValues[i] = BoxState.free;
 
-            winner = GameEnumStates.IdentifyWinner.NULL;
+            winner = IdentifyWinner.NULL;
             FoundPattern = false;
-            PlayerState = true;
+            FirstPlayerState = true;
             GameState = true;
         }
 
         #region ComputerControl
-        private short? LogicalAIComputation(GameEnumStates.BoxState Piece1, GameEnumStates.BoxState Piece2)
+        private short? LogicalAIComputation(BoxState Piece1, BoxState Piece2)
         {
             short count = 0;
             short? Aival = null;
@@ -149,10 +149,10 @@ namespace tictactoe.Models
         {
             int index;
 
-            var val = LogicalAIComputation(GameEnumStates.BoxState.cross, GameEnumStates.BoxState.zero);
+            var val = LogicalAIComputation(BoxState.cross, BoxState.zero);
 
             if (val == null)
-                val = LogicalAIComputation(GameEnumStates.BoxState.zero, GameEnumStates.BoxState.cross);
+                val = LogicalAIComputation(BoxState.zero, BoxState.cross);
 
             if (val != null)
             {
@@ -165,7 +165,7 @@ namespace tictactoe.Models
                 Random random = new Random();
                 index = random.Next(0, maxSize - 1);
 
-                if (tileValues[index] == GameEnumStates.BoxState.free)
+                if (tileValues[index] == BoxState.free)
                     break;
             }
 
@@ -173,7 +173,7 @@ namespace tictactoe.Models
         }
         #endregion
 
-        private void Getwin(GameEnumStates.BoxState boxState)
+        private void Getwin(BoxState boxState)
         {
 
             #region Horizontalcheck
@@ -289,11 +289,11 @@ namespace tictactoe.Models
 
         public void CheckGameState()
         {
-            if (this.winner == GameEnumStates.IdentifyWinner.NULL)
+            if (this.winner == IdentifyWinner.NULL)
             {
                 foreach (var tile in this.tileValues)
                 {
-                    if (tile == GameEnumStates.BoxState.free)
+                    if (tile == BoxState.free)
                     {
                         this.GameState = true;
                         break;
@@ -303,11 +303,11 @@ namespace tictactoe.Models
                 }
 
                 if (this.GameState != true)
-                    winner = GameEnumStates.IdentifyWinner.stalemate;
+                    winner = IdentifyWinner.stalemate;
             }
         }
 
-        public void GetWinner(GameEnumStates.BoxState tempstate)
+        public void GetWinner(BoxState tempstate)
         {
             if (this.GameState != false)
             {
@@ -315,11 +315,11 @@ namespace tictactoe.Models
 
                 if (FoundPattern)
                 {
-                    if (tempstate == GameEnumStates.BoxState.cross)
-                        winner = GameEnumStates.IdentifyWinner.player;
+                    if (tempstate == BoxState.cross)
+                        winner = IdentifyWinner.player1;
 
-                    else if (tempstate == GameEnumStates.BoxState.zero)
-                        winner = GameEnumStates.IdentifyWinner.computer;
+                    else if (tempstate == BoxState.zero)
+                        winner = IdentifyWinner.player2;
                 }
 
                 CheckGameState();

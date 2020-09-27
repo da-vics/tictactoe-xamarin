@@ -10,14 +10,16 @@ namespace tictactoe.ViewModel
     {
         private Grid _container { get; set; }
         private readonly GameLogic _gameLogic = new GameLogic();
+        private GamePlayMode _gamePlayMode { get; set; }
 
         public delegate void AlertUser(string title, string message);
         public event AlertUser OnUserAlert;
 
         public ICommand ResetGame { get; set; }
 
-        public GamePlayScreenViewModel(Grid grid)
+        public GamePlayScreenViewModel(Grid grid, GamePlayMode playMode)
         {
+            _gamePlayMode = playMode;
             _container = grid;
             ResetGame = new Command(Reset);
         }
@@ -56,36 +58,28 @@ namespace tictactoe.ViewModel
 
             var gridIndex = column + (row * 3);
 
-            if (_gameLogic.PlayerState && _gameLogic.GameState)
+            if (_gamePlayMode == GamePlayMode.AgaistComputer)
             {
+                if (_gameLogic.FirstPlayerState)
+                    playerState(btnPressed, gridIndex, PlayerStates.Player1Turn);
 
-                if (_gameLogic.tileValues[gridIndex] == GameEnumStates.BoxState.free)
-                {
-                    _gameLogic.tileValues[gridIndex] = GameEnumStates.BoxState.cross;
-                    btnPressed.Text = "X";
-                    _gameLogic.PlayerState = false;
-                    _gameLogic.GetWinner(GameEnumStates.BoxState.cross);
-                }
+                computerState();
+            }
 
+            else
+            {
+                if (_gameLogic.FirstPlayerState)
+                    playerState(btnPressed, gridIndex, PlayerStates.Player1Turn);
                 else
-                    OnUserAlert?.Invoke("Invalid", "Box Filled!");
-            }///
-
-
-            if (!_gameLogic.PlayerState && _gameLogic.GameState)
-            {
-                var btn = _container.Children.Cast<Button>().ToArray();
-                var index = _gameLogic.ComputerPlay();
-                btn[index].Text = "O";
-                btn[index].TextColor = Color.Red;
-                _gameLogic.tileValues[index] = GameEnumStates.BoxState.zero;
-                _gameLogic.PlayerState = true;
-                _gameLogic.GetWinner(GameEnumStates.BoxState.zero);
+                {
+                    playerState(btnPressed, gridIndex, PlayerStates.Player2Turn);
+                    _gameLogic.FirstPlayerState = true;
+                }
             }
 
             if (_gameLogic.GameState != true)
             {
-                if (_gameLogic.winner == GameEnumStates.IdentifyWinner.stalemate)
+                if (_gameLogic.winner == IdentifyWinner.stalemate)
                 {
                     _container.Children.Cast<Button>().ToList().ForEach(button =>
                     {
@@ -102,10 +96,57 @@ namespace tictactoe.ViewModel
         }
         #endregion
 
+        void playerState(Button btnPressed, int gridIndex, PlayerStates player)
+        {
+            var _boxState = new BoxState();
+            var playerchar = string.Empty;
+
+            if (player == PlayerStates.Player1Turn)
+            {
+                _boxState = BoxState.cross;
+                playerchar = "X";
+            }
+
+            else
+            {
+                _boxState = BoxState.zero;
+                playerchar = "O";
+                btnPressed.TextColor = Color.DarkRed;
+            }
+
+            if (_gameLogic.GameState)
+            {
+                if (_gameLogic.tileValues[gridIndex] == BoxState.free)
+                {
+                    _gameLogic.tileValues[gridIndex] = _boxState;
+                    btnPressed.Text = playerchar;
+                    _gameLogic.FirstPlayerState = false;
+                    _gameLogic.GetWinner(_boxState);
+                }
+
+                else
+                    OnUserAlert?.Invoke("Invalid", "Box Filled!");
+            }///
+        }
+
+        void computerState()
+        {
+            if (!_gameLogic.FirstPlayerState && _gameLogic.GameState)
+            {
+                var btn = _container.Children.Cast<Button>().ToArray();
+                var index = _gameLogic.ComputerPlay();
+                btn[index].Text = "O";
+                btn[index].TextColor = Color.DarkRed;
+                _gameLogic.tileValues[index] = BoxState.zero;
+                _gameLogic.FirstPlayerState = true;
+                _gameLogic.GetWinner(BoxState.zero);
+            }
+        }
+
         void WinLogic()
         {
-            bool winnerLogic = _gameLogic.winner == GameEnumStates.IdentifyWinner.player
-                   || _gameLogic.winner == GameEnumStates.IdentifyWinner.computer;
+            bool winnerLogic = _gameLogic.winner == IdentifyWinner.player1
+                   || _gameLogic.winner == IdentifyWinner.player2;
 
             if (winnerLogic)
             {

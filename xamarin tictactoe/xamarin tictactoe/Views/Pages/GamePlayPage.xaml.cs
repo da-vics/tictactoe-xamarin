@@ -1,6 +1,7 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using tictactoe.ViewModel;
+using tictactoe.Models;
 
 namespace tictactoe.Views.Pages
 {
@@ -9,10 +10,10 @@ namespace tictactoe.Views.Pages
     {
         private GamePlayScreenViewModel _screenViewModel { get; set; }
 
-        public GamePlayPage()
+        public GamePlayPage(GamePlayMode gamePlayMode)
         {
             InitializeComponent();
-            _screenViewModel = new GamePlayScreenViewModel(Container);
+            _screenViewModel = new GamePlayScreenViewModel(Container, gamePlayMode);
             this.BindingContext = _screenViewModel;
             _screenViewModel.MapInit();
 
