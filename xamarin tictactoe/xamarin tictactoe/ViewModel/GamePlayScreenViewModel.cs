@@ -25,9 +25,10 @@ namespace tictactoe.ViewModel
             _gamePlayMode = playMode;
             _container = grid;
             ResetGame = new Command(Reset);
+            MapInit();
         }
 
-        public void MapInit()
+        private void MapInit()
         {
             _gameLogic.DefaultTileInit();
 
@@ -40,7 +41,7 @@ namespace tictactoe.ViewModel
             });
         }
 
-        public void Reset()
+        private void Reset()
         {
             _gameLogic.DefaultTileInit();
             ShowPlayTurns = "Player1's Turn";
@@ -112,7 +113,7 @@ namespace tictactoe.ViewModel
         }
         #endregion
 
-        void playerState(Button btnPressed, int gridIndex, PlayerStates player)
+        private void playerState(Button btnPressed, int gridIndex, PlayerStates player)
         {
             var _boxState = new BoxState();
             var playerchar = string.Empty;
@@ -145,7 +146,7 @@ namespace tictactoe.ViewModel
             }///
         }
 
-        void computerState()
+        private void computerState()
         {
             if (!_gameLogic.FirstPlayerState && _gameLogic.GameState)
             {
@@ -159,7 +160,7 @@ namespace tictactoe.ViewModel
             }
         }
 
-        void WinLogic()
+        private void WinLogic()
         {
             if (_gameLogic.winner != IdentifyWinner.NULL)
             {
