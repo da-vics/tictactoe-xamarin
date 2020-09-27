@@ -11,7 +11,7 @@ namespace tictactoe.ViewModel
         private Grid _container { get; set; }
         private readonly GameLogic _gameLogic = new GameLogic();
         private GamePlayMode _gamePlayMode { get; set; }
-        private string _showPlayTurns { get; set; } = "player1's Turn";
+        private string _showPlayTurns { get; set; } = "Player1's Turn";
 
 
         public string ShowPlayTurns { get => _showPlayTurns; set { _showPlayTurns = value; OnPropertyChanged(); } }
@@ -43,6 +43,7 @@ namespace tictactoe.ViewModel
         public void Reset()
         {
             _gameLogic.DefaultTileInit();
+            ShowPlayTurns = "Player1's Turn";
 
             _container.Children.Cast<Button>().ToList().ForEach(btn =>
             {
@@ -61,31 +62,34 @@ namespace tictactoe.ViewModel
 
             var gridIndex = column + (row * 3);
 
-            if (_gamePlayMode == GamePlayMode.AgaistComputer)
+            if (_gameLogic.GameState)
             {
-                if (_gameLogic.FirstPlayerState)
+                if (_gamePlayMode == GamePlayMode.AgaistComputer)
                 {
-                    playerState(btnPressed, gridIndex, PlayerStates.Player1Turn);
-                    ShowPlayTurns = "Computer's Turn";
-                }
+                    if (_gameLogic.FirstPlayerState)
+                    {
+                        playerState(btnPressed, gridIndex, PlayerStates.Player1Turn);
+                        ShowPlayTurns = "Computer's Turn";
+                    }
 
-                computerState();
-                ShowPlayTurns = "Player1's Turn";
-            }
-
-            else
-            {
-                if (_gameLogic.FirstPlayerState)
-                {
-                    playerState(btnPressed, gridIndex, PlayerStates.Player1Turn);
-                    ShowPlayTurns = "Player2's Turn";
+                    computerState();
+                    ShowPlayTurns = "Player1's Turn";
                 }
 
                 else
                 {
-                    playerState(btnPressed, gridIndex, PlayerStates.Player2Turn);
-                    _gameLogic.FirstPlayerState = true;
-                    ShowPlayTurns = "Player1's Turn";
+                    if (_gameLogic.FirstPlayerState)
+                    {
+                        playerState(btnPressed, gridIndex, PlayerStates.Player1Turn);
+                        ShowPlayTurns = "Player2's Turn";
+                    }
+
+                    else
+                    {
+                        playerState(btnPressed, gridIndex, PlayerStates.Player2Turn);
+                        _gameLogic.FirstPlayerState = true;
+                        ShowPlayTurns = "Player1's Turn";
+                    }
                 }
             }
 
@@ -100,7 +104,7 @@ namespace tictactoe.ViewModel
                     });
 
                     OnUserAlert?.Invoke("GameOver", "Stalemate");
-                    //Reset();
+                    ShowPlayTurns = "Game Over!";
                 }
                 else
                     WinLogic();
@@ -165,7 +169,7 @@ namespace tictactoe.ViewModel
                     btn[_gameLogic.winSegments[i]].BackgroundColor = Color.Green;
 
                 OnUserAlert?.Invoke("GameOver", $"{_gameLogic.winner.ToString()} wins");
-                //Reset();
+                ShowPlayTurns = "Game Over!";
             }
         }
     }
