@@ -11,7 +11,10 @@ namespace tictactoe.ViewModel
         private Grid _container { get; set; }
         private readonly GameLogic _gameLogic = new GameLogic();
         private GamePlayMode _gamePlayMode { get; set; }
+        private string _showPlayTurns { get; set; } = "player1's Turn";
 
+
+        public string ShowPlayTurns { get => _showPlayTurns; set { _showPlayTurns = value; OnPropertyChanged(); } }
         public delegate void AlertUser(string title, string message);
         public event AlertUser OnUserAlert;
 
@@ -61,19 +64,28 @@ namespace tictactoe.ViewModel
             if (_gamePlayMode == GamePlayMode.AgaistComputer)
             {
                 if (_gameLogic.FirstPlayerState)
+                {
                     playerState(btnPressed, gridIndex, PlayerStates.Player1Turn);
+                    ShowPlayTurns = "Computer's Turn";
+                }
 
                 computerState();
+                ShowPlayTurns = "Player1's Turn";
             }
 
             else
             {
                 if (_gameLogic.FirstPlayerState)
+                {
                     playerState(btnPressed, gridIndex, PlayerStates.Player1Turn);
+                    ShowPlayTurns = "Player2's Turn";
+                }
+
                 else
                 {
                     playerState(btnPressed, gridIndex, PlayerStates.Player2Turn);
                     _gameLogic.FirstPlayerState = true;
+                    ShowPlayTurns = "Player1's Turn";
                 }
             }
 
@@ -145,10 +157,7 @@ namespace tictactoe.ViewModel
 
         void WinLogic()
         {
-            bool winnerLogic = _gameLogic.winner == IdentifyWinner.player1
-                   || _gameLogic.winner == IdentifyWinner.player2;
-
-            if (winnerLogic)
+            if (_gameLogic.winner != IdentifyWinner.NULL)
             {
                 var btn = _container.Children.Cast<Button>().ToArray();
 

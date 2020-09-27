@@ -34,16 +34,23 @@
             Grid.Row="0"
             Margin="5"
             Padding="0"
-            HorizontalOptions="End"
+            HorizontalOptions="StartAndExpand"
             Orientation="Horizontal"
             Spacing="0"
             VerticalOptions="Center">
+
+            <Label
+                HorizontalOptions="Center"
+                Text="{Binding ShowPlayTurns}"
+                TextColor="DarkBlue"
+                VerticalOptions="Center" />
 
             <Label
                 Margin="0"
                 Padding="0"
                 FontFamily="HandFont"
                 FontSize="20"
+                HorizontalOptions="End"
                 Text="Reload"
                 TextColor="DarkRed"
                 VerticalOptions="Center" />
@@ -57,6 +64,7 @@
                 Command="{Binding ResetGame}"
                 FontFamily="FontAwesome"
                 FontSize="20"
+                HorizontalOptions="End"
                 Text="&#xf0e2;"
                 VerticalOptions="Center" />
 
